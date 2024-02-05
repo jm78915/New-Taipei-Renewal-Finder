@@ -38,7 +38,23 @@ export const useOAuthStore = defineStore('oAuth', () => {
                     },
                 });
 
-                google.accounts.id.prompt();
+                // @ts-ignore
+                google.accounts.id.prompt((notification) => {
+                    if (
+                        notification.isNotDisplayed() ||
+                        notification.isSkippedMoment()
+                    ) {
+                        const loginButton =
+                            document.getElementById('login-button');
+
+                        if (loginButton !== null) {
+                            google.accounts.id.renderButton(loginButton, {
+                                type: 'standard',
+                                logo_alignment: 'left',
+                            });
+                        }
+                    }
+                });
             };
         });
     }
