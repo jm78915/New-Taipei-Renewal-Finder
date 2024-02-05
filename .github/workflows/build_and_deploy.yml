@@ -1,0 +1,43 @@
+name: Build and Deploy
+on: [push]
+env:
+    VITE_FB_APP_ID: ${{ vars.VITE_FB_APP_ID }}
+    VITE_FB_XFBML: ${{ vars.VITE_FB_XFBML }}
+    VITE_FB_VERSION: ${{ vars.VITE_FB_VERSION }}
+    VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
+    
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: latest
+                  run_install: false
+
+            - id: pnpm-cache
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - uses: actions/cache@v3
+              with:
+                  path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
+
+            - run: pnpm install
+
+            - run: pnpm run build
+
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  folder: dist
