@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Login from '@/components/Login.vue';
-import Map from '@/components/Map.vue';
+import LoginModal from '@/components/LoginModal.vue';
+import MapBlock from '@/components/MapBlock.vue';
 import StopList from '@/components/StopList.vue';
 import { useMapStore } from '@/stores/map';
 import { computed, onMounted, ref } from 'vue';
@@ -26,12 +26,12 @@ onMounted(() => {
 
 <template>
     <main class="flex h-screen flex-col bg-gray-100 p-0 md:flex-row">
-        <Login />
+        <LoginModal />
 
         <div
             class="h-1/3 w-full flex-shrink-0 md:order-1 md:h-full md:flex-shrink"
         >
-            <Map />
+            <MapBlock />
         </div>
 
         <div

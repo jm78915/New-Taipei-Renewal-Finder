@@ -34,7 +34,9 @@ export const useMapStore = defineStore('map', () => {
             const json = await calculateDistance(view.latitude, view.longitude);
 
             stops.value = json.result;
-        } catch {}
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const fetchPolygonFeatures = async () => {
@@ -42,7 +44,9 @@ export const useMapStore = defineStore('map', () => {
             const json = await getGeolocation('tucheng.json');
 
             polygonFeatures.value = json.result.features;
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return {
