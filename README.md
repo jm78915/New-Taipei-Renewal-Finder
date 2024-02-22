@@ -6,12 +6,12 @@
 
 ```plaintext
 # Facebook App Configurations
-REACT_APP_FB_APP_ID=
-REACT_APP_FB_XFBML=true
-REACT_APP_FB_VERSION=v19.0
+VITE_FB_APP_ID=
+VITE_FB_XFBML=
+VITE_FB_VERSION=
 
 # Google Client ID for Google Sign-In
-REACT_APP_GOOGLE_CLIENT_ID=
+VITE_GOOGLE_CLIENT_ID=
 ```
 
 ## Project Setup
